@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SESITEC | Catálogo de Experiências</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Plus Jakarta Sans (Moderna e Geométrica) -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #0f172a; /* Fallback */
+            color: #f8fafc;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Liquid Background Animation */
+        .liquid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            overflow: hidden;
+        }
+
+        .blob {
+            position: absolute;
+            filter: blur(80px);
+            opacity: 0.6;
+            animation: float 10s infinite ease-in-out alternate;
+        }
+        .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: #2563eb; animation-delay: 0s; }
+        .blob-2 { bottom: -10%; right: -10%; width: 60vw; height: 60vw; background: #4f46e5; animation-delay: 2s; }
+        .blob-3 { top: 40%; left: 40%; width: 40vw; height: 40vw; background: #0ea5e9; animation-delay: 4s; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, -50px) scale(1.1); }
+        }
+
+        /* Glassmorphism Classes */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .glass-input {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .glass-input:focus {
+            background: rgba(15, 23, 42, 0.8);
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+            outline: none;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.5); }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.4); }
+
+        /* Typography & Utilities */
+        .text-glow { text-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+        
+        select option {
+            background-color: #0f172a;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Elements -->
+    <div class="liquid-bg">
+        <div class="blob blob-1 rounded-full"></div>
+        <div class="blob blob-2 rounded-full"></div>
+        <div class="blob blob-3 rounded-full"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="relative z-10 min-h-screen flex flex-col">
+        
+        <!-- Header / Search Hero -->
+        <header class="w-full pt-8 pb-6 px-4 sm:px-6 lg:px-8 transition-all duration-500" id="mainHeader">
+            <div class="max-w-5xl mx-auto text-center mb-8">
+                <div class="inline-flex items-center gap-3 mb-2 opacity-90">
+                    <div class="p-2 bg-blue-500/20 rounded-lg border border-blue-400/30">
+                        <i data-lucide="cpu" class="w-6 h-6 text-blue-300"></i>
+                    </div>
+                    <span class="tracking-widest text-xs font-bold uppercase text-blue-200">Base de Conhecimento</span>
+                </div>
+                <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-2 text-glow">
+                    SESITEC
+                </h1>
+                <p class="text-blue-200/80 font-light text-lg">Explore propostas pedagógicas e tecnologias educacionais</p>
+            </div>
+
+            <!-- Search & Filters Container -->
+            <div class="max-w-5xl mx-auto glass-panel rounded-2xl p-6 md:p-8">
+                
+                <!-- Main Search Input -->
+                <div class="relative w-full mb-6 group">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <i data-lucide="search" class="h-6 w-6 text-blue-300 group-focus-within:text-blue-100 transition-colors"></i>
+                    </div>
+                    <input type="text" id="searchInput" 
+                           class="block w-full pl-12 pr-4 py-4 rounded-xl text-lg glass-input placeholder-slate-400"
+                           placeholder="O que você procura? (Ex: Robótica, BNCC, Arte, 9º ano...)"
+                           autocomplete="off">
+                </div>
+
+                <!-- Filters Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    
+                    <!-- Select Equipamento -->
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i data-lucide="monitor" class="h-4 w-4 text-slate-400"></i>
+                        </div>
+                        <select id="filterEquipamento" class="block w-full pl-10 pr-10 py-3 text-sm rounded-lg glass-input appearance-none cursor-pointer">
+                            <option value="">Todos Equipamentos</option>
+                        </select>
+                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                            <i data-lucide="chevron-down" class="h-4 w-4 text-slate-400"></i>
+                        </div>
+                    </div>
+
+                    <!-- Select Segmento -->
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i data-lucide="layers" class="h-4 w-4 text-slate-400"></i>
+                        </div>
+                        <select id="filterSegmento" class="block w-full pl-10 pr-10 py-3 text-sm rounded-lg glass-input appearance-none cursor-pointer">
+                            <option value="">Todos Segmentos</option>
+                        </select>
+                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                            <i data-lucide="chevron-down" class="h-4 w-4 text-slate-400"></i>
+                        </div>
+                    </div>
+
+                    <!-- Select Componente -->
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i data-lucide="book-open" class="h-4 w-4 text-slate-400"></i>
+                        </div>
+                        <select id="filterComponente" class="block w-full pl-10 pr-10 py-3 text-sm rounded-lg glass-input appearance-none cursor-pointer">
+                            <option value="">Todos Componentes</option>
+                        </select>
+                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                            <i data-lucide="chevron-down" class="h-4 w-4 text-slate-400"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Active Filters & Reset -->
+                <div id="activeFiltersBar" class="hidden mt-4 pt-4 border-t border-white/10 flex justify-between items-center text-sm">
+                    <span id="resultsCount" class="text-blue-200"></span>
+                    <button onclick="clearFilters()" class="text-slate-300 hover:text-white flex items-center gap-1 text-xs font-semibold uppercase tracking-wider transition-colors">
+                        <i data-lucide="x" class="w-3 h-3"></i> Limpar
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+            
+            <!-- Welcome / Empty State (Initial) -->
+            <div id="welcomeState" class="flex flex-col items-center justify-center py-20 text-center animate-fade-in">
+                <div class="w-24 h-24 bg-gradient-to-tr from-blue-500/20 to-purple-500/20 rounded-full flex items-center justify-center mb-6 glass-panel border-0">
+                    <i data-lucide="sparkles" class="w-10 h-10 text-blue-300"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-white mb-2">Descubra novas possibilidades</h2>
+                <p class="text-slate-400 max-w-md mx-auto">
+                    Utilize os filtros acima ou digite uma palavra-chave para explorar nosso catálogo de propostas tecnológicas.
+                </p>
+            </div>
+
+            <!-- No Results State -->
+            <div id="noResultsState" class="hidden flex-col items-center justify-center py-20 text-center">
+                <div class="w-20 h-20 bg-red-500/10 rounded-full flex items-center justify-center mb-4 border border-red-500/20">
+                    <i data-lucide="search-x" class="w-8 h-8 text-red-300"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white">Nenhum resultado encontrado</h3>
+                <p class="text-slate-400 mt-2">Tente ajustar seus termos de busca ou remover filtros.</p>
+            </div>
+
+            <!-- Cards Grid -->
+            <div id="cardsContainer" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Cards injected here -->
+            </div>
+
+            <!-- Load More -->
+            <div id="loadMoreContainer" class="hidden text-center mt-12">
+                <button id="btnLoadMore" class="group relative px-8 py-3 rounded-full font-semibold text-white bg-blue-600 hover:bg-blue-500 transition-all shadow-lg shadow-blue-900/50 overflow-hidden">
+                    <span class="relative z-10 flex items-center gap-2">
+                        Carregar Mais <i data-lucide="arrow-down" class="w-4 h-4 group-hover:translate-y-1 transition-transform"></i>
+                    </span>
+                    <div class="absolute inset-0 h-full w-full bg-gradient-to-r from-blue-400 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                </button>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="border-t border-white/5 bg-slate-900/50 backdrop-blur-md py-8">
+            <div class="max-w-7xl mx-auto px-4 text-center">
+                <p class="text-slate-500 text-sm">© 2024 SESITEC. Educação para o futuro.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Modal Details (Glass Style) -->
+    <div id="detailsModal" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true">
+        <!-- Backdrop -->
+        <div class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm transition-opacity" onclick="closeModal()"></div>
+        
+        <!-- Modal Content -->
+        <div class="fixed inset-0 z-10 overflow-y-auto">
+            <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+                <div class="relative transform overflow-hidden rounded-2xl glass-panel text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-2xl border border-white/10 bg-[#0f172a]">
+                    
+                    <!-- Modal Header -->
+                    <div class="px-6 py-6 border-b border-white/5 bg-white/5">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <h3 class="text-xl font-bold leading-6 text-white mb-2" id="modalTitle">Título</h3>
+                                <div class="flex flex-wrap gap-2" id="modalTags"></div>
+                            </div>
+                            <button onclick="closeModal()" class="text-slate-400 hover:text-white transition-colors bg-white/5 p-1 rounded-full hover:bg-white/10">
+                                <i data-lucide="x" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Modal Body -->
+                    <div class="px-6 py-6">
+                        <div class="mb-6">
+                            <h4 class="text-xs font-bold uppercase tracking-wider text-blue-400 mb-2 flex items-center gap-2">
+                                <i data-lucide="scroll-text" class="w-3 h-3"></i> Habilidade BNCC
+                            </h4>
+                            <div class="bg-white/5 rounded-xl p-4 border border-white/5 text-slate-300 leading-relaxed text-sm" id="modalDescription">
+                                <!-- Description -->
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-blue-500/10 rounded-lg p-3 border border-blue-500/20">
+                                <span class="text-[10px] text-blue-300 uppercase font-bold tracking-wider">Ano Escolar</span>
+                                <p class="text-white font-medium mt-1" id="modalGrade">-</p>
+                            </div>
+                            <div class="bg-purple-500/10 rounded-lg p-3 border border-purple-500/20">
+                                <span class="text-[10px] text-purple-300 uppercase font-bold tracking-wider">Componente</span>
+                                <p class="text-white font-medium mt-1" id="modalSubject">-</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Footer -->
+                    <div class="bg-white/5 px-6 py-4 flex flex-row-reverse">
+                        <button type="button" class="w-full sm:w-auto inline-flex justify-center rounded-lg bg-blue-600 px-6 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 transition-colors" onclick="closeModal()">
+                            Fechar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. DADOS (Consolidados das Planilhas) ---
+        const rawData = [
+            // NOTEBOOK
+            { eqp: "Notebook", seg: "EI", ano: "2º", comp: "-", tema: "Leitura digital", hab: "(EI03EO03) Ampliar as relações interpessoais, desenvolvendo atitudes de participação e cooperação. (EI03EF03) Escolher e folhear livros, procurando orientar-se por temas e ilustrações. (EI03EF07) Levantar hipóteses sobre gêneros textuais." },
+            { eqp: "Notebook", seg: "AI", ano: "4º", comp: "Geografia e Língua Portuguesa", tema: "O universo Minecraft: campo x cidade", hab: "(EF04GE04) Reconhecer especificidades do campo e da cidade, identificando seus tipos de produções. (EF15LP09) Expressar-se em situações de intercâmbio oral com clareza." },
+            { eqp: "Notebook", seg: "AF", ano: "7º", comp: "Ciências", tema: "Biomas do Brasil e do Mundo", hab: "(EF07CI07) Caracterizar os principais ecossistemas brasileiros quanto à paisagem, à quantidade de água, ao tipo de solo. (EF07CI08) Avaliar como os impactos provocados por catástrofes naturais." },
+            { eqp: "Notebook", seg: "EM", ano: "1ª A 3ª", comp: "Física", tema: "Energia Renovável: A eficiência das placas solares", hab: "(EM13CNT106) Avaliar tecnologias e possíveis soluções para as demandas que envolvem a geração e o consumo de energia elétrica. (EM13CNT301) Construir questões, elaborar hipóteses e previsões." },
+            
+            // TABLET
+            { eqp: "Tablet", seg: "AF", ano: "6 A 9", comp: "Arte", tema: "Exposição de fotografia digital", hab: "(EF69AR02) Pesquisar e analisar diferentes estilos visuais. (EF69AR35) Identificar e manipular diferentes tecnologias e recursos digitais para acessar, apreciar, produzir." },
+            { eqp: "Tablet", seg: "AF", ano: "8º", comp: "Ciências", tema: "Energias renováveis e não renováveis", hab: "(EF08CI06) Discutir e avaliar usinas de geração de energia elétrica, suas semelhanças e diferenças e impactos socioambientais." },
+            { eqp: "Tablet", seg: "AF", ano: "6º E 7º", comp: "Educação Física", tema: "Jogos Eletrônicos dos anos 80", hab: "(EF67EF01) Experimentar e fruir jogos eletrônicos diversos. (EF67EF02) Identificar as transformações nas características dos jogos eletrônicos." },
+            { eqp: "Tablet", seg: "EM", ano: "1ª", comp: "Língua Inglesa", tema: "Greetings and Introductions", hab: "(EM13LGG401) Analisar criticamente textos de modo a compreender e caracterizar as línguas como fenômeno geopolítico, histórico e social." },
+            { eqp: "Tablet", seg: "EM", ano: "1ª A 3ª", comp: "Química", tema: "Alterações Climáticas", hab: "(EM13CNT101) Analisar e representar transformações e conservações em sistemas. (EM13CNT301) Construir questões, elaborar hipóteses." },
+
+            // CHROMECAST
+            { eqp: "Chromecast", seg: "EM", ano: "1ª", comp: "Biologia", tema: "Bioética: clonagem e células-tronco", hab: "(EM13CNT304) Analisar e debater situações controversas sobre a aplicação de conhecimentos da área de Ciências da Natureza. (EM13CNT303) Interpretar textos de divulgação científica." },
+            { eqp: "Chromecast", seg: "EM", ano: "1ª", comp: "Educação Física", tema: "Desvios posturais da coluna", hab: "(EM13LGG101) Compreender e analisar processos de produção e circulação de discursos nas diferentes linguagens." },
+            { eqp: "Chromecast", seg: "AF", ano: "6º E 9º", comp: "Matemática", tema: "Sistema Monetário Brasileiro", hab: "(EF06MA01) Comparar, ordenar, ler e escrever números naturais e racionais. (EF06MA02) Reconhecer o sistema de numeração decimal." },
+            { eqp: "Chromecast", seg: "AF", ano: "8º", comp: "Língua Portuguesa", tema: "Projetando nossas emoções", hab: "(EF69LP36) Produzir, revisar e editar textos voltados para a divulgação do conhecimento e de dados e resultados de pesquisas." },
+            { eqp: "Chromecast", seg: "EI", ano: "2º", comp: "-", tema: "Racha cuca", hab: "(EI03ET05) Classificar objetos e figuras. (EI03EO03) Ampliar as relações interpessoais." },
+
+            // LABDISC
+            { eqp: "Labdisc", seg: "AF", ano: "9º", comp: "Arte", tema: "Ressignificação: estudo de luz e cores", hab: "(EF69AR04) Analisar os elementos constitutivos das artes visuais. (EF69AR35) Identificar e manipular diferentes tecnologias." },
+            { eqp: "Labdisc", seg: "AF", ano: "7º", comp: "Ciências", tema: "Poluição atmosférica", hab: "(EF07CI12) Demonstrar que o ar é uma mistura de gases, identificando sua composição e discutir fenômenos naturais." },
+            { eqp: "Labdisc", seg: "AF", ano: "8º E 9º", comp: "Educação Física", tema: "Frequência cardíaca", hab: "(EF89EF07) Vivenciar e aplicar um ou mais programas de exercícios físicos, identificando as exigências corporais." },
+            { eqp: "Labdisc", seg: "AI", ano: "5º", comp: "Ciências", tema: "Analisando a água da torneira", hab: "(EF05CI04) Identificar os principais usos da água. (EF05CI05) Construir propostas coletivas para um consumo mais consciente." },
+            { eqp: "Labdisc", seg: "EI", ano: "1º", comp: "-", tema: "Que batida é essa?", hab: "(EI03TS03) Reconhecer as qualidades do som. (EI03TS01) Utilizar sons produzidos por materiais durante brincadeiras." },
+
+            // ÓCULOS VR
+            { eqp: "Óculos VR", seg: "AF", ano: "9º", comp: "Arte", tema: "Criação em arte contemporânea", hab: "(EF69AR02) Pesquisar e analisar diferentes estilos visuais. (EF69AR35) Identificar e manipular diferentes tecnologias e recursos digitais." },
+            { eqp: "Óculos VR", seg: "AF", ano: "8º", comp: "Arte", tema: "Significando os 4 elementos", hab: "(EF69AR02) Pesquisar e analisar diferentes estilos visuais. (EF69AR07) Dialogar com princípios conceituais." },
+            { eqp: "Óculos VR", seg: "EM", ano: "1ª", comp: "Química", tema: "Desafiando: que átomo sou?", hab: "(EM13CNT201) Analisar e discutir modelos, teorias e leis sobre a evolução do Universo. (EM13CNT301) Construir questões, elaborar hipóteses." },
+
+            // ESTÚDIO
+            { eqp: "Estúdio", seg: "AF", ano: "7º", comp: "Arte", tema: "Linguagem cinematográfica", hab: "(EF69AR31) Relacionar as práticas artísticas à vida social. (EF69AR35) Manipular tecnologias digitais. (EF69AR32) Analisar relações processuais." },
+            { eqp: "Estúdio", seg: "AF", ano: "8º", comp: "Ciências", tema: "Infecções sexualmente transmissíveis", hab: "(EF08CI09) Comparar métodos contraceptivos. (EF08CI10) Identificar sintomas e transmissão de DSTs." },
+            { eqp: "Estúdio", seg: "EM", ano: "1º", comp: "Língua Inglesa", tema: "News Report from SNN", hab: "(EM13LGG101) Compreender e analisar processos de produção de discursos. (EM13LGG105) Analisar processos de remidiação." },
+            { eqp: "Estúdio", seg: "EM", ano: "1º", comp: "Língua Portuguesa", tema: "Gênero: Entrevista de emprego", hab: "(EM13LP19) Apresentar-se por meio de textos multimodais. (EM13LP01) Relacionar o texto com seu contexto sócio-histórico." },
+
+            // BRAÇO ROBÓTICO
+            { eqp: "Braço Robótico", seg: "AF", ano: "6º", comp: "Arte", tema: "Criação gestual com o robô", hab: "(EF69AR35) Manipular tecnologias e recursos digitais. (EF69AR32) Explorar relações processuais. (EF69AR06) Desenvolver processos de criação." },
+            { eqp: "Braço Robótico", seg: "AF", ano: "9º", comp: "Arte", tema: "Diálogos cênicos - Emojis", hab: "(EF69AR35) Manipular tecnologias. (EF69AR32) Analisar relações. (EF69AR06) Desenvolver processos de criação." },
+            { eqp: "Braço Robótico", seg: "EM", ano: "1ª", comp: "Química", tema: "Decodificando moléculas", hab: "(EM13CNT307) Analisar as propriedades dos materiais. (EM13CNT301) Construir questões e elaborar hipóteses." },
+
+            // IMPRESSORA 3D
+            { eqp: "Impressora 3D", seg: "AF", ano: "8º", comp: "Arte", tema: "Máscaras africanas", hab: "(EF69AR04) Analisar elementos das artes visuais. (EF69AR06) Desenvolver processos de criação. (EF69AR35) Manipular tecnologias." },
+            { eqp: "Impressora 3D", seg: "AF", ano: "8º", comp: "Arte", tema: "Escultura coletiva", hab: "(EF69AR03) Analisar matrizes estéticas e culturais." },
+            { eqp: "Impressora 3D", seg: "EM", ano: "1º", comp: "Química", tema: "Carbonado: Faces de um elemento", hab: "(EM13CNT307) Analisar as propriedades dos materiais. (EM13CNT301) Construir questões, elaborar hipóteses." },
+            { eqp: "Impressora 3D", seg: "EM", ano: "1º", comp: "Química", tema: "Quebrachem", hab: "(EM13CNT307) Analisar as propriedades dos materiais. (EM13CNT301) Construir questões." }
+        ];
+
+        // --- 2. LÓGICA (Keywords) ---
+        const stopWords = new Set([
+            'a', 'as', 'o', 'os', 'e', 'ou', 'de', 'do', 'da', 'dos', 'das', 'em', 'no', 'na', 'nos', 'nas', 
+            'um', 'uma', 'uns', 'umas', 'para', 'por', 'com', 'sem', 'que', 'se', 'ao', 'aos', 'pelo', 'pela',
+            'como', 'são', 'ser', 'foi', 'sua', 'seu', 'suas', 'seus', 'sobre', 'entre', 'até', 'isso', 'aquilo',
+            'está', 'estão', 'ter', 'têm', 'não', 'sim', 'mais', 'muito', 'cada', 'já', 'quando', 'onde',
+            'ef69ar35', 'em13cnt301', 'ef07ci07', 'bncc', 'habilidade', 'código', 'adaptada'
+        ]);
+
+        function generateKeywords(text) {
+            if (!text) return [];
+            let cleanText = text.toLowerCase()
+                .replace(/\([a-z0-9]+\)/g, '')
+                .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
+                .replace(/\s{2,}/g, " ");
+            let words = cleanText.split(' ');
+            let meaningfulWords = words.filter(w => w.length > 3 && !stopWords.has(w));
+            let distinctWords = [...new Set(meaningfulWords)];
+            return distinctWords.slice(0, 4); // Limite de 4 tags para o design
+        }
+
+        // --- 3. ESTADO ---
+        let state = {
+            data: [],
+            filteredData: [],
+            itemsToShow: 12, // Menos itens inicialmente para performance
+            itemsIncrement: 12,
+            hasInteracted: false,
+            filters: {
+                search: "",
+                eqp: "",
+                seg: "",
+                comp: ""
+            }
+        };
+
+        // --- 4. INIT ---
+        function init() {
+            state.data = rawData.map((item, index) => ({
+                id: index,
+                ...item,
+                keywords: generateKeywords(item.hab)
+            }));
+            
+            // Inicialmente filteredData está vazio ou não exibido
+            state.filteredData = [];
+            
+            populateFilters();
+            updateUIState(); // Define se mostra welcome ou grid
+            lucide.createIcons();
+
+            // Listeners
+            document.getElementById('searchInput').addEventListener('input', (e) => handleInteraction('search', e.target.value));
+            document.getElementById('filterEquipamento').addEventListener('change', (e) => handleInteraction('eqp', e.target.value));
+            document.getElementById('filterSegmento').addEventListener('change', (e) => handleInteraction('seg', e.target.value));
+            document.getElementById('filterComponente').addEventListener('change', (e) => handleInteraction('comp', e.target.value));
+            document.getElementById('btnLoadMore').addEventListener('click', loadMore);
+        }
+
+        function populateFilters() {
+            const getOptions = (key) => [...new Set(state.data.map(i => i[key]).filter(Boolean))].sort();
+            const fillSelect = (id, options) => {
+                const select = document.getElementById(id);
+                // Manter primeira opção
+                options.forEach(opt => {
+                    const el = document.createElement('option');
+                    el.value = opt;
+                    el.textContent = opt;
+                    select.appendChild(el);
+                });
+            };
+            fillSelect('filterEquipamento', getOptions('eqp'));
+            fillSelect('filterSegmento', getOptions('seg'));
+            fillSelect('filterComponente', getOptions('comp'));
+        }
+
+        function handleInteraction(key, value) {
+            state.filters[key] = value.toLowerCase();
+            
+            // Verificar se houve interação real (busca > 0 ou filtro selecionado)
+            const isSearching = state.filters.search.length > 0;
+            const isFiltering = state.filters.eqp !== "" || state.filters.seg !== "" || state.filters.comp !== "";
+
+            state.hasInteracted = isSearching || isFiltering;
+            state.itemsToShow = 12;
+
+            if (state.hasInteracted) {
+                applyFilters();
+            } else {
+                state.filteredData = [];
+                updateUIState();
+            }
+        }
+
+        function clearFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('filterEquipamento').value = '';
+            document.getElementById('filterSegmento').value = '';
+            document.getElementById('filterComponente').value = '';
+            
+            state.filters = { search: "", eqp: "", seg: "", comp: "" };
+            state.hasInteracted = false;
+            updateUIState();
+        }
+
+        function applyFilters() {
+            const { search, eqp, seg, comp } = state.filters;
+
+            state.filteredData = state.data.filter(item => {
+                const matchesSearch = search === "" || 
+                    item.tema.toLowerCase().includes(search) || 
+                    item.hab.toLowerCase().includes(search) ||
+                    item.keywords.some(k => k.includes(search));
+                
+                // Comparação exata para selects (cuidado com case sensitive se o value mudar)
+                // O value do select é populado direto do dado, então comparação direta funciona se pegarmos o .value sem toLowerCase no elemento, 
+                // mas no state.filters salvamos lower. Vamos ajustar:
+                
+                const filterEqpVal = document.getElementById('filterEquipamento').value;
+                const filterSegVal = document.getElementById('filterSegmento').value;
+                const filterCompVal = document.getElementById('filterComponente').value;
+
+                const matchesEqp = eqp === "" || item.eqp === filterEqpVal;
+                const matchesSeg = seg === "" || item.seg === filterSegVal;
+                const matchesComp = comp === "" || item.comp === filterCompVal;
+
+                return matchesSearch && matchesEqp && matchesSeg && matchesComp;
+            });
+
+            updateUIState();
+            renderGrid();
+        }
+
+        function updateUIState() {
+            const welcome = document.getElementById('welcomeState');
+            const noResults = document.getElementById('noResultsState');
+            const grid = document.getElementById('cardsContainer');
+            const loadMore = document.getElementById('loadMoreContainer');
+            const activeFiltersBar = document.getElementById('activeFiltersBar');
+
+            if (!state.hasInteracted) {
+                welcome.classList.remove('hidden');
+                noResults.classList.add('hidden');
+                grid.classList.add('hidden');
+                loadMore.classList.add('hidden');
+                activeFiltersBar.classList.add('hidden');
+                return;
+            }
+
+            welcome.classList.add('hidden');
+            activeFiltersBar.classList.remove('hidden');
+
+            if (state.filteredData.length === 0) {
+                noResults.classList.remove('hidden');
+                noResults.style.display = "flex"; // Tailwind hidden sets display:none, need flex for centering
+                grid.classList.add('hidden');
+                loadMore.classList.add('hidden');
+            } else {
+                noResults.classList.add('hidden');
+                noResults.style.display = "none";
+                grid.classList.remove('hidden');
+                // Grid render is called separately
+            }
+
+            document.getElementById('resultsCount').textContent = `${state.filteredData.length} resultados`;
+        }
+
+        function getEquipmentColor(eqp) {
+            // Colors adapted for dark mode/glass
+            const map = {
+                'Notebook': 'text-blue-300 border-blue-500/30 bg-blue-500/10',
+                'Tablet': 'text-purple-300 border-purple-500/30 bg-purple-500/10',
+                'Chromecast': 'text-red-300 border-red-500/30 bg-red-500/10',
+                'Labdisc': 'text-green-300 border-green-500/30 bg-green-500/10',
+                'Óculos VR': 'text-indigo-300 border-indigo-500/30 bg-indigo-500/10',
+                'Estúdio': 'text-pink-300 border-pink-500/30 bg-pink-500/10',
+                'Braço Robótico': 'text-orange-300 border-orange-500/30 bg-orange-500/10',
+                'Impressora 3D': 'text-teal-300 border-teal-500/30 bg-teal-500/10'
+            };
+            return map[eqp] || 'text-slate-300 border-slate-500/30 bg-slate-500/10';
+        }
+
+        function getEquipmentIcon(eqp) {
+            const icons = {
+                'Notebook': 'laptop', 'Tablet': 'tablet', 'Chromecast': 'cast',
+                'Labdisc': 'flask-conical', 'Óculos VR': 'glasses', 'Estúdio': 'video',
+                'Braço Robótico': 'bot', 'Impressora 3D': 'box'
+            };
+            return icons[eqp] || 'box';
+        }
+
+        function renderGrid() {
+            const container = document.getElementById('cardsContainer');
+            const loadMoreBtn = document.getElementById('loadMoreContainer');
+            
+            container.innerHTML = '';
+            
+            const visibleItems = state.filteredData.slice(0, state.itemsToShow);
+
+            visibleItems.forEach((item, idx) => {
+                const eqpStyle = getEquipmentColor(item.eqp);
+                const iconName = getEquipmentIcon(item.eqp);
+                
+                // Simple animation delay
+                const delay = (idx % 12) * 50; 
+
+                const card = document.createElement('div');
+                card.className = "glass-card rounded-2xl p-6 flex flex-col justify-between h-full cursor-pointer group animate-fade-in-up";
+                card.style.animationDelay = `${delay}ms`;
+                card.onclick = () => openModal(item);
+
+                const keywordsHtml = item.keywords.map(k => 
+                    `<span class="text-[10px] font-bold tracking-wider text-slate-400 bg-white/5 px-2 py-1 rounded border border-white/5 uppercase">${k}</span>`
+                ).join('');
+
+                card.innerHTML = `
+                    <div>
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold border ${eqpStyle}">
+                                <i data-lucide="${iconName}" class="w-3.5 h-3.5"></i> ${item.eqp}
+                            </span>
+                            <span class="text-[10px] font-bold text-slate-400 bg-slate-800/50 border border-slate-700 px-2 py-1 rounded">${item.seg}</span>
+                        </div>
+                        
+                        <h3 class="text-lg font-bold text-white mb-2 leading-tight group-hover:text-blue-300 transition-colors">${item.tema}</h3>
+                        <p class="text-sm text-slate-400 mb-4 font-medium">${item.comp !== '-' ? item.comp : 'Diversos'}</p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            ${keywordsHtml}
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-white/5 flex justify-between items-center mt-auto">
+                        <span class="text-xs font-medium text-slate-500 flex items-center gap-1">
+                            <i data-lucide="graduation-cap" class="w-3 h-3"></i> ${item.ano} Ano
+                        </span>
+                        <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-all">
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+
+            if (state.filteredData.length > state.itemsToShow) {
+                loadMoreBtn.classList.remove('hidden');
+            } else {
+                loadMoreBtn.classList.add('hidden');
+            }
+
+            lucide.createIcons();
+        }
+
+        function loadMore() {
+            state.itemsToShow += state.itemsIncrement;
+            renderGrid();
+        }
+
+        // --- MODAL ---
+        function openModal(item) {
+            const modal = document.getElementById('detailsModal');
+            document.getElementById('modalTitle').textContent = item.tema;
+            document.getElementById('modalDescription').textContent = item.hab;
+            document.getElementById('modalGrade').textContent = item.ano + ' Ano';
+            document.getElementById('modalSubject').textContent = item.comp;
+            
+            const tagsContainer = document.getElementById('modalTags');
+            tagsContainer.innerHTML = item.keywords.map(k => 
+                `<span class="bg-blue-500/20 text-blue-200 px-3 py-1 rounded-full text-xs font-semibold border border-blue-500/30 uppercase tracking-wide">${k}</span>`
+            ).join('');
+
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('detailsModal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+        
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") closeModal();
+        });
+
+        // Add CSS Animation for cards
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInUp {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .animate-fade-in-up {
+                animation: fadeInUp 0.5s ease-out forwards;
+                opacity: 0; /* Start hidden */
+            }
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            .animate-fade-in {
+                animation: fadeIn 0.5s ease-out forwards;
+            }
+        `;
+        document.head.appendChild(style);
+
+        init();
+    </script>
+</body>
+</html>
